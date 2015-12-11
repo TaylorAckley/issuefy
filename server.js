@@ -32,18 +32,9 @@ app.use(cors());
 
 app.set('secret', config.secret);
 
-// check env
-
-console.log(process.argv[2]);
-
 //mongodb
-if (process.argv[2] == '--heroku' || '--production' || 1) {
-	console.log('In production mode.   Connecting to production DB on Mongolab');
+
 	mongoose.connect(config.MONGOLAB_URI);
-} else if (process.argv[2] != '--heroku' || '--dev' ) {
-	console.log('In dev mode.   Connecting to local DB');
-	mongoose.connect(config.MONGO_URI);
-	}
 
 mongoose.connection.on('error', function(err) {
     console.log('Error: Could not connect to MongoDB. Did you forget to run `mongod`?'.red);

@@ -122,7 +122,7 @@ var data = {
   to: req.body.email,
 //Subject and text data
   subject: 'Password Reset for Issuefy',
-  html: 'A password reset was requested for your Issuefy account. <a href="http://localhost:3000/resetPassword?token=' + token + '">Click here to reset your password.</a>'
+  html: 'A password reset was requested for your Issuefy account. <a href="' + config.TOKEN_URL + '"/resetPassword?token=' + token + '">Click here to reset your password.</a>'
 };
 helpers.sendMail(data, function(err, result) {
   if (err) {
