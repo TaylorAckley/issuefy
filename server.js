@@ -14,7 +14,7 @@ var request         = require('request');
 var qs              = require('querystring');
 var jwt             = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config          = require('./config'); // get our config file
-var helpers         = require('./backend/helpers.js'); // get our config file
+var helpers         = require('./backend/helpers.js'); // get our helpers file
 var app             = express();
 
 //env vars
@@ -32,14 +32,26 @@ app.use(cors());
 
 app.set('secret', config.secret);
 
+// check env
+
+console.log(process.argv[2]);
+
 //mongodb
-mongoose.connect(config.MONGO_URI);
+if (process.argv[2] == '--heroku' || '--production' || 1) {
+	console.log('In production mode.   Connecting to production DB on Mongolab');
+	mongoose.connect(config.MONGOLAB_URI);
+} else if (process.argv[2] != '--heroku' || '--dev' ) {
+	console.log('In dev mode.   Connecting to local DB');
+	mongoose.connect(config.MONGO_URI);
+	}
+
 mongoose.connection.on('error', function(err) {
     console.log('Error: Could not connect to MongoDB. Did you forget to run `mongod`?'.red);
   });
 
 //authentication
 
+console.log();
 
 
 //routes
