@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "Issue tracker",
-  "main": "app/app.js",
+  "main": "server.js",
   "dependencies": {
     "async": "^1.5.0",
     "bcryptjs": "^2.3.0",
@@ -57,13 +57,10 @@
     "serve-static": "^1.7.1",
     "tiny-lr": "^0.1.4",
     "watch": "^0.13.0"
-  },
-  "scripts": {
-    "postinstall": "bower install --no-interactive --allow-root"
-  },
+},
   "repository": {
     "type": "git",
-    "url": "https://github.com/jbutko/AngularJS-Boilerplate.git"
+    "url": "https://github.com/TaylorAckley/issuefy.git"
   },
   "keywords": [
     "angular",
