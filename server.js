@@ -19,6 +19,8 @@ var app             = express();
 
 //env vars
 var port            = process.env.PORT || 3000;
+var APP_URL           = process.env.APP_URL || config.APP_URL;
+var MONGOLAB_URI           = process.env.MONGOLAB_URI || config.MONGOLAB_URI;
 
 //boring logging and parsing
 app.use(express.static(__dirname + '/public'));                 // sets the static files location to public
@@ -34,16 +36,13 @@ app.set('secret', config.secret);
 
 //mongodb
 
-	mongoose.connect(config.MONGOLAB_URI);
+	mongoose.connect(MONGOLAB_URI);
 
 mongoose.connection.on('error', function(err) {
     console.log('Error: Could not connect to MongoDB. Did you forget to run `mongod`?'.red);
   });
 
 //authentication
-
-console.log();
-
 
 //routes
 

@@ -11,6 +11,7 @@ var helpers   = require('./helpers.js');
 
 module.exports = function(app) {
 
+var TOKEN_SECRET            = process.env.TOKEN_SECRET || config.TOKEN_SECRET;
   // Authorization
 
   function ensureAuthenticated(req, res, next) {
@@ -21,7 +22,7 @@ module.exports = function(app) {
 
   var payload = null;
   try {
-    payload = jwt.decode(token, config.TOKEN_SECRET);
+    payload = jwt.decode(token, TOKEN_SECRET);
   }
   catch (err) {
     return res.status(401).send({ message: err.message });
@@ -42,7 +43,7 @@ function createJWT(user) {
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
-  return jwt.sign(payload, config.TOKEN_SECRET);
+  return jwt.sign(payload, TOKEN_SECRET);
 }
 
 // get user
@@ -122,7 +123,7 @@ var data = {
   to: req.body.email,
 //Subject and text data
   subject: 'Password Reset for Issuefy',
-  html: 'A password reset was requested for your Issuefy account. <a href="' + config.TOKEN_URL + '"/resetPassword?token=' + token + '">Click here to reset your password.</a>'
+  html: 'A password reset was requested for your Issuefy account. <a href="' + APP_URL + '"/resetPassword?token=' + token + '">Click here to reset your password.</a>'
 };
 helpers.sendMail(data, function(err, result) {
   if (err) {
