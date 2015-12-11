@@ -5,7 +5,7 @@ var config    = require('../config');
 module.exports = {
 
 sendMail: function(data, callback) {
-    var mailgun = new Mailgun({apiKey: config.MAILGUN_API, domain: config.MAILGUN_DOMAIN});
+    var mailgun = new Mailgun({apiKey: MAILGUN_API, domain: MAILGUN_DOMAIN});
     mailgun.messages().send(data, function (err, body) {
         if (err)throw err;
         else {
