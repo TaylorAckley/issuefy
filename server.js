@@ -16,10 +16,12 @@ var jwt             = require('jsonwebtoken'); // used to create, sign, and veri
 var helpers         = require('./backend/helpers.js'); // get our helpers file
 var app             = express();
 
+
+
 //env vars
 var port            				= process.env.PORT || 3000;
 var APP_URL           			= process.env.APP_URL;
-var MONGOLAB_URI           	= process.env.MONGOLAB_UR;
+var MONGOLAB_URI           	= process.env.MONGOLAB_URI;
 var MAILGUN_API           	= process.env.MAILGUN_API;
 var MAILGUN_DOMAIN          = process.env.MAILGUN_DOMAIN;
 var TOKEN_SECRET            = process.env.TOKEN_SECRET;
