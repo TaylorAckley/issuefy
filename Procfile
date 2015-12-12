@@ -1,2 +1,2 @@
-web: npm install
-web: node server.js
+web: bin/web
+worker: bin/worker
