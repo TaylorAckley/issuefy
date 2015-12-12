@@ -13,7 +13,7 @@ var moment          = require('moment');
 var request         = require('request');
 var qs              = require('querystring');
 var jwt             = require('jsonwebtoken'); // used to create, sign, and verify tokens
-if (process.env.APP_URL) {
+if (!process.env.APP_URL) {
 var config          = require('./config'); // get our config file
 }
 var helpers         = require('./backend/helpers.js'); // get our helpers file
