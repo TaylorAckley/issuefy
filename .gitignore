@@ -5,6 +5,7 @@ _build
 npm-debug.log
 .idea
 config.js
+.env
 _OLD
 build
 # Windows image file caches

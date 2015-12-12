@@ -11,6 +11,7 @@
     "colors": "^1.1.2",
     "cors": "^2.7.1",
     "express": "^4.13.3",
+    "foreman": "1.4.1",
     "jsonwebtoken": "^5.4.1",
     "mailgun-js": "0.5",
     "method-override": "^2.3.5",
@@ -57,6 +58,9 @@
     "serve-static": "^1.7.1",
     "tiny-lr": "^0.1.4",
     "watch": "^0.13.0"
+  },
+  "scripts": {
+  "start": "nf start"
 },
   "repository": {
     "type": "git",
