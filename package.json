@@ -22,7 +22,7 @@
     "request": "^2.65.0"
   },
   "engines": {
-    "node": "latest"
+    "node": "4.2.3"
   },
   "devDependencies": {
     "browser-sync": "^1.9.1",
