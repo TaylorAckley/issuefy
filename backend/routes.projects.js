@@ -1,11 +1,10 @@
 var mongoose  = require('mongoose');
-var Project      = require('./models/projects.js');
+var Project   = require('./models/projects.js');
 var moment    = require('moment');
-var config    = require('../config');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');
 var Mailgun   = require('mailgun-js');
-var helpers   = require('./helpers.js');
+var helpers   = require('./helpers.js')(app);
 
 
 

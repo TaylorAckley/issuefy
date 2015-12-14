@@ -49,7 +49,7 @@ mongoose.connection.on('error', function(err) {
 //routes
 
 routes = require('./backend/routes.auth.js')(app);
-routes = require('./backend/routes.org.js')(app);
+//routes = require('./backend/routes.org.js')(app);
 
   app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
