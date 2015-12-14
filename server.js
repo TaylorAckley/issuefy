@@ -20,6 +20,7 @@ var app             = express();
 var helpers         = require('./backend/helpers.js');
 
 //env vars
+
 var port            				= process.env.PORT || 3000;
 var APP_URL           			= process.env.APP_URL;
 var MONGOLAB_URI           	= process.env.MONGOLAB_URI;

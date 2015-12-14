@@ -7,11 +7,12 @@ var Mailgun   = require('mailgun-js');
 var helpers   = require('./helpers.js');
 
 var port            				= process.env.PORT || 3000;
-var APP_URL           			= process.env.APP_URL || config.APP_URL;
-var MONGOLAB_URI           	= process.env.MONGOLAB_URI || config.MONGOLAB_URI;
-var MAILGUN_API           	= process.env.MAILGUN_API || config.MAILGUN_API;
-var MAILGUN_DOMAIN          = process.env.MAILGUN_DOMAIN || config.MAILGUN_DOMAIN;
-var TOKEN_SECRET            = process.env.TOKEN_SECRET || config.TOKEN_SECRET;
+var APP_URL           			= process.env.APP_URL;
+var MONGOLAB_URI           	= process.env.MONGOLAB_URI;
+var MAILGUN_API           	= process.env.MAILGUN_API;
+var MAILGUN_DOMAIN          = process.env.MAILGUN_DOMAIN;
+var TOKEN_SECRET            = process.env.TOKEN_SECRET;
+
 
 module.exports = function(app) {
   // Authorization
