@@ -9,9 +9,9 @@ var MAILGUN_API           	= process.env.MAILGUN_API || config.MAILGUN_API;
 var MAILGUN_DOMAIN          = process.env.MAILGUN_DOMAIN || config.MAILGUN_DOMAIN;
 var TOKEN_SECRET            = process.env.TOKEN_SECRET || config.TOKEN_SECRET;
 
-module.exports = {
+module.exports = function(app) {
 
-sendMail: function(data, callback) {
+function sendMail(data, callback) {
     var mailgun = new Mailgun({apiKey: MAILGUN_API, domain: MAILGUN_DOMAIN});
     mailgun.messages().send(data, function (err, body) {
         if (err)throw err;
