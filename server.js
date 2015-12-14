@@ -13,10 +13,11 @@ var moment          = require('moment');
 var request         = require('request');
 var qs              = require('querystring');
 var jwt             = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var helpers         = require('./backend/helpers.js')(app);
 var app             = express();
 
+// global modules
 
+var helpers         = require('./backend/helpers.js');
 
 //env vars
 var port            				= process.env.PORT || 3000;

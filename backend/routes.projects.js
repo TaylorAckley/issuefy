@@ -4,7 +4,7 @@ var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');
 var Mailgun   = require('mailgun-js');
-var helpers   = require('./helpers.js')(app);
+var helpers   = require('./helpers.js');
 
 
 
