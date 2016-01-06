@@ -1,5 +1,5 @@
 var mongoose  = require('mongoose');
-var Project   = require('./models/projects.js');
+var Tag       = require('./models/tags.js');
 var auth      = require('./routes.auth.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
@@ -16,32 +16,33 @@ var TOKEN_SECRET            = process.env.TOKEN_SECRET;
 
 module.exports = function(app) {
 
-app.post('/API/project/create', function(req, res) {
-  Project.findOne({prefix: req.body.prefix}, function(err, existingProject) {
-    if (existingProject) {
-      return res.status(401).send({ message: 'There is already a project with that name' });
+app.post('/API/tag/create', function(req, res) {
+  Tag.findOne({name: req.body.name}, function(err, existingTag) {
+    if (existingTag) {
+      return res.status(401).send({ message: 'There is already a tag with that name' });
     }
-    var project = new Project({
+    var tag = new Tag({
       name: req.body.name,
-      prefix: req.body.prefix,
+      expiration: req.body.expiration,
+      description: req.body.description,
       created_by: req.user || req.body.created_by,
 
     });
-    project.save(function(err, result) {
+    tag.save(function(err, result) {
       if (err) {
-        return res.status(409).send({message: 'There was an error creating the project: ' + err});
+        return res.status(409).send({message: 'There was an error creating the tag: ' + err});
       }
-      res.send({message: 'New project created', result: result});
+      res.send({message: 'New tag created', result: result});
     });
   });
 });
 
-app.get('/api/projects', function(req, res) {
-  Project.find({}, function(err, projects) {
+app.get('/api/tags', function(req, res) {
+  Tag.find({}, function(err, tags) {
     if (err) {
-      return res.status(409).send({message: 'There was an error retrieving projects ' + err});
+      return res.status(409).send({message: 'There was an error retrieving tags ' + err});
     }
-    res.send(projects);
+    res.send(tags);
   });
 });
 

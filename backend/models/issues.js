@@ -3,11 +3,17 @@ var Schema = mongoose.Schema;
 
 var IssueSchema = new Schema({
     title: {type: String, required: true, trim: true},
-    prefix: {type: String, required: true},
-    project: {type: String, required: true},
-    createdby: {type: String, required: true},
-    updatedby: {type: String, required: true},
-    isResolved: {type: Boolean, default: true},
+    number: {type: Number, required: true, min: 1000},
+    description: {type: String, required: true},
+    fields: [new Schema({
+      _id: {type: Schema.ObjectId},
+      value : {type: String}
+    })],
+    project: {type: Schema.ObjectId, required: true},
+    tags: {type: Array, required: false, default: []},
+    isResolved: {type: Boolean, default: false},
+    created_by: {type: String, required: true},
+    updated_by: {type: String, required: false},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
 });
@@ -21,4 +27,4 @@ IssueSchema.pre('save', function(next){
     next();
 });
 
-module.exports = mongoose.model('issues', OrgSchema);
+module.exports = mongoose.model('issues', IssueSchema);

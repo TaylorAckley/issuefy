@@ -5,6 +5,7 @@
   "description": "Issue tracker",
   "main": "server.js",
   "dependencies": {
+    "angular-ui-bootstrap": "^0.14.3",
     "async": "^1.5.0",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.14.1",
@@ -52,6 +53,7 @@
     "gulp-usemin": "^0.3.11",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
+    "mocha": "^2.3.4",
     "opn": "^1.0.0",
     "run-sequence": "^1.0.2",
     "serve-index": "^1.5.0",
@@ -60,8 +62,8 @@
     "watch": "^0.13.0"
   },
   "scripts": {
-  "start": "nf start"
-},
+    "start": "nf start"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TaylorAckley/issuefy.git"

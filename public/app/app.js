@@ -22,21 +22,25 @@
       'ngAnimate',
       'toastr',
       'ui.router',
-      'satellizer'
+      'satellizer',
+      'ui.bootstrap'
     ])
     .config(config);
 
   // safe dependency injection
   // this prevents minification issues
-  config.$inject = ['$httpProvider', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$authProvider'];
+  config.$inject = ['$httpProvider', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$authProvider', '$locationProvider'];
 
-  function config($httpProvider, $compileProvider, $stateProvider, $urlRouterProvider, $authProvider) {
+  function config($httpProvider, $compileProvider, $stateProvider, $urlRouterProvider, $authProvider, $locationProvider) {
 
     $stateProvider
       .state('home', {
         url: '/',
         controller: 'HomeCtrl',
-        templateUrl: 'views/home.html'
+        templateUrl: 'views/home.html',
+        resolve: {
+          loginRequired: loginRequired
+        }
       })
       .state('login', {
         url: '/login',
@@ -66,7 +70,17 @@
         resolve: {
           loginRequired: loginRequired
         }
+      })
+      .state('issue/create', {
+        url: '/issue/create',
+        templateUrl: 'views/createIssue.html',
+        controller: 'IssueCtrl',
+        resolve: {
+          loginRequired: loginRequired
+        }
       });
+
+      $locationProvider.html5Mode(true);
 
     $urlRouterProvider.otherwise('/');
 
@@ -144,7 +158,6 @@ function loginRequired($q, $location, $auth) {
   function run($rootScope, $location) {
 
     // put here everything that you need to run on page load
-
   }
 
 

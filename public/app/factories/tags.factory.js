@@ -2,22 +2,19 @@
 
   angular
     .module('issuefy')
-    .factory('Account', Account);
+    .factory('Tags', Tags);
 
-  Account.$inject = ['$http', 'LocalStorage'];
+  Tags.$inject = ['$http', 'LocalStorage'];
 
 
   ////////////
 
 
-  function Account($http, LocalStorage) {
+  function Tags($http, LocalStorage) {
 
     return {
-          getProfile: function() {
-            return $http.get('/api/me');
-          },
-          updateProfile: function(profileData) {
-            return $http.put('/api/me', profileData);
+          getTags: function() {
+            return $http.get('/api/tags');
           }
         };
 

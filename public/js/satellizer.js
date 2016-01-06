@@ -264,6 +264,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           };
 
           $auth.isAuthenticated = function() {
+            $rootScope.$broadcast('user-authenticated');
             return shared.isAuthenticated();
           };
 
@@ -552,7 +553,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
                   data[value] = defaults.redirectUri;
                   break;
                 default:
-                  data[value] = oauthData[key]
+                  data[value] = oauthData[key];
               }
             });
 
@@ -854,7 +855,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
         }
         return result;
-      }
+      };
     })
     .factory('SatellizerStorage', ['$window', '$log', 'SatellizerConfig', function($window, $log, config) {
 

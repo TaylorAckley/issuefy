@@ -8,7 +8,7 @@ var UserSchema = new Schema({
     email: {type: String, required: true, lowercase: true, trim: true, unique: true},
     password: { type: String, required: true},
     name: {type: String, required: true, trim: true} ,
-    org: {type: String, required: true, default: 'Sandbox'},
+    org: {type: String, required: true, default: '56677e2191015d882f8ede28'},
     permissions: {
       isAdmin: {type: Boolean, default: false},
       createIssue: {type: Boolean, default: true},

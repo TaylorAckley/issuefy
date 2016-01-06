@@ -1,5 +1,5 @@
 var mongoose  = require('mongoose');
-var Org      = require('./models/orgs.js');
+var Org       = require('./models/orgs.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');
@@ -15,15 +15,15 @@ var TOKEN_SECRET            = process.env.TOKEN_SECRET;
 
 module.exports = function(app) {
 
-
-app.post('/org/create', function(req, res) {
+app.post('/API/org/create', function(req, res) {
   Org.findOne({name: req.body.name}, function(err, existingOrg) {
     if (existingOrg) {
-      return res.status(401).send({ message: 'There is already a Organization with that name' });
+      return res.status(401).send({ message: 'There is already a organization with that name' });
     }
     var org = new Org({
       name: req.body.name,
       regkey: req.body.regkey,
+      createdby: req.user,
     });
     org.save(function(err, result) {
       if (err) {
@@ -33,5 +33,12 @@ app.post('/org/create', function(req, res) {
     });
   });
 });
-
+app.get('/api/orgs', function(req, res) {
+  Org.find({}, function(err, orgs) {
+    if (err) {
+      return res.status(409).send({message: 'There was an error retrieving organizations ' + err});
+    }
+    res.send(orgs);
+  });
+});
 };

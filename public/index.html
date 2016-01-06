@@ -10,38 +10,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
-  <title>issuefy</title>
+  <title>Issuefy</title>
   <link href="favicon.png" rel="shortcut icon">
   <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
   <link href="./styles/angular-toastr.css" rel="stylesheet">
 	<link href="./styles/auth.css" rel="stylesheet">
 	<link href="./styles/social.css" rel="stylesheet">
 	<link href="./styles/animations.css" rel="stylesheet">
-  <link href="./styles/styles.css" rel="stylesheet">
+  <link href="./styles/style.css" rel="stylesheet">
 </head>
 <body>
-<div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
+<nav ng-controller="NavbarCtrl" class="navbar navbar-custom navbar-static-top" role="navigation">
+	 <div class="container">
   <div class="navbar-header">
-    <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> issuefy</a>
+    <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Issuefy</a>
   </div>
-  <ul class="nav navbar-nav">
-    <li><a href="/#/">Home</a></li>
-    <li ng-if="isAuthenticated()"><a href="/#/profile">Profile</a></li>
+  <ul class="nav navbar-nav" ng-if="isAuthenticated()">
+    <li><a href="/">Home</a></li>
+		<li role="menuitem"><a href="/projects">Projects</a></li>
+		<li role="menuitem"><a href="/fields">Fields</a></li>
+		<li role="menuitem"><a href="/tags">Tags</a></li>
+
   </ul>
   <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><a href="/#/login">Login</a></li>
-    <li><a href="/#/signup">Sign up</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/signup">Sign up</a></li>
   </ul>
   <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><a href="/#/logout">Logout</a></li>
+
+		<li>
+			<div class="btn-group" uib-dropdown is-open="status.isopen">
+	      <a id="single-button" type="button" uib-dropdown-toggle ng-disabled="disabled">
+	        <i class="fa fa-user"></i>&nbsp;{{userNav.name}}
+	      </a>
+	      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="/profile">Profile</a></li>
+	        <li class="divider"></li>
+	        <li role="menuitem"><a href="/logout">Logout</a></li>
+	      </ul>
+	    </div>
+</li>
   </ul>
 </div>
+</nav>
 
-<div ui-view></div>
+
+<section ui-view></section>
 
 <!-- Third-party Libraries -->
 <script src="/js/angular.min.js"></script>
@@ -50,6 +68,7 @@
 <script src="/js/angular-resource.js"></script>
 <script src="/js/angular-sanitize.js"></script>
 <script src="/js/angular-ui-router.js"></script>
+<script src="/js/angular-ui-bootsrap.js"></script>
 <script src="/js/angular-toastr.tpls.js"></script>
 <script src="/js/satellizer.min.js"></script>
 
@@ -58,13 +77,17 @@
 <script src="/app/config.js"></script>
 <script src="/app/directives/passwordStrength.js"></script>
 <script src="/app/directives/passwordMatch.js"></script>
+<script src="/app/directives/issues.directives.js"></script>
+<script src="/app/directives/projects.directives.js"></script>
 <script src="/app/controllers/home.js"></script>
 <script src="/app/controllers/login.js"></script>
 <script src="/app/controllers/signup.js"></script>
 <script src="/app/controllers/logout.js"></script>
 <script src="/app/controllers/profile.js"></script>
 <script src="/app/controllers/navbar.js"></script>
-<script src="/app/services/account.js"></script>
+<script src="/app/factories/account.factory.js"></script>
+<script src="/app/factories/issues.factory.js"></script>
+<script src="/app/factories/projects.factory.js"></script>
 <script src="/app/services/LocalStorage.service.js"></script>
 <script src="/app/services/QueryService.service.js"></script>
 

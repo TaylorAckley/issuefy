@@ -10,7 +10,7 @@
     function ProfileCtrl($scope, $http, $location, LocalStorage, QueryService, $auth, toastr, Account) {
 
       $scope.getProfile = function() {
-        Account.getProfile()
+        Account.getUser()
           .then(function(response) {
             $scope.user = response.data;
           })
@@ -18,6 +18,7 @@
             toastr.error(response.data.message, response.status);
           });
       };
+
       $scope.updateProfile = function() {
         Account.updateProfile($scope.user)
           .then(function() {

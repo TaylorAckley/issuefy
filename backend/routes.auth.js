@@ -51,11 +51,18 @@ function createJWT(user) {
 
 // get user
 
+app.get('/api/users', function(req, res) {
+  User.find({}, function(err, users) {
+    res.send(users);
+  });
+});
+
 app.get('/api/me', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
     res.send(user);
   });
 });
+
 
 app.put('/api/me', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
@@ -77,7 +84,6 @@ app.post('/auth/login', function(req, res) {
     if (!user) {
       return res.status(401).send({ message: 'Invalid email and/or password' });
     }
-    console.log(user.email);
     user.comparePassword(req.body.password, function(err, isMatch) {
       if (!isMatch) {
         return res.status(401).send({ message: 'Invalid email and/or password' });
@@ -120,15 +126,13 @@ User.update({email: req.body.email},{passwordReset: token}, {multi: false}, func
   }
 });
 var data = {
-//Specify email data
   from: 'Issuefy@issuefy.com',
-//The email to contact
   to: req.body.email,
-//Subject and text data
   subject: 'Password Reset for Issuefy',
   html: 'A password reset was requested for your Issuefy account. <a href="' + APP_URL + '"/resetPassword?token=' + token + '">Click here to reset your password.</a>'
 };
 helpers.sendMail(data, function(err, result) {
+  console.log('Time to send an email!');
   if (err) {
     console.log(err);
     return res.status(409).send({message: 'Error sending email'});
