@@ -8,6 +8,7 @@ npm-debug.log
 .env
 _OLD
 build
+Procfile
 
 # Windows image file caches
 Thumbs.db
