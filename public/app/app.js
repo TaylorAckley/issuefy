@@ -23,7 +23,8 @@
       'toastr',
       'ui.router',
       'satellizer',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'textAngular'
     ])
     .config(config);
 
@@ -31,7 +32,7 @@
   // this prevents minification issues
   config.$inject = ['$httpProvider', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$authProvider', '$locationProvider'];
 
-  function config($httpProvider, $compileProvider, $stateProvider, $urlRouterProvider, $authProvider, $locationProvider) {
+  function config($httpProvider, $compileProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
     $stateProvider
       .state('home', {
@@ -71,16 +72,29 @@
           loginRequired: loginRequired
         }
       })
-      .state('issue/create', {
+      .state('issueCreate', {
         url: '/issue/create',
-        templateUrl: 'views/createIssue.html',
-        controller: 'IssueCtrl',
+        templateUrl: 'views/createissue.html',
+        controller: 'NewIssueCtrl',
         resolve: {
           loginRequired: loginRequired
         }
+      })
+      .state('viewissue', {
+        url: '/issue/:prefix-:number',
+        templateUrl: 'views/viewissue.html',
+        controller: 'IssueCtrl',
+        resolve: {
+          loginRequired: loginRequired,
+          projectContext: function($http, $stateParams) {
+            return $http.get('/api/project', {params: {prefix: $stateParams.prefix}}).then(function(data) {
+              return data.data[0];
+            });
+          }
+        }
       });
 
-      $locationProvider.html5Mode(true);
+      //$locationProvider.html5Mode(true);  // Need to inject locationProvider if enabled
 
     $urlRouterProvider.otherwise('/');
 
@@ -149,7 +163,7 @@ function loginRequired($q, $location, $auth) {
   /**
    * Run block
    */
-  angular
+  /*angular
     .module('issuefy')
     .run(run);
 
@@ -158,7 +172,6 @@ function loginRequired($q, $location, $auth) {
   function run($rootScope, $location) {
 
     // put here everything that you need to run on page load
-  }
-
+  }*/
 
 })();

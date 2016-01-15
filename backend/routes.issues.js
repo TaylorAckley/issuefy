@@ -1,3 +1,5 @@
+"use strict";
+
 var mongoose  = require('mongoose');
 var Issues     = require('./models/issues.js');
 var moment    = require('moment');
@@ -71,8 +73,25 @@ app.post('/api/issue/create', function(req, res) {
   });
 });
 
+app.get('/api/issue', function(req, res) {
+  console.log(req.query.project);
+  Issues.findOne({project: req.query.project, number: req.query.number})
+      .populate('project')
+      .populate('created_by')
+      .exec(function(err, issue) {
+        console.log('Issue focus');
+     console.log(issue);
+     if (err) {
+       return res.status(409).send({message: 'There was an error retrieving the issue' + err});
+     }
+     res.send(issue);
+   });
+});
+
 app.get('/api/issues', function(req, res) {
-  Issues.find({}, function(err, issues) {
+  Issues.find()
+  .populate('project')
+  .exec(function(err, issues) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving issues' + err});
     }

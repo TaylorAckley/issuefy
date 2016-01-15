@@ -15,6 +15,9 @@
     return {
           getProjects: function() {
             return $http.get('/api/projects');
+          },
+          getProjectFields: function(prefix) {
+            return $http.get('/api/project/fields', {params: {prefix: prefix}});
           }
         };
 

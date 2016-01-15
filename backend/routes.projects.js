@@ -16,7 +16,7 @@ var TOKEN_SECRET            = process.env.TOKEN_SECRET;
 
 module.exports = function(app) {
 
-app.post('/API/project/create', function(req, res) {
+app.post('/api/project/create', function(req, res) {
   Project.findOne({prefix: req.body.prefix}, function(err, existingProject) {
     if (existingProject) {
       return res.status(401).send({ message: 'There is already a project with that name' });
@@ -38,6 +38,17 @@ app.post('/API/project/create', function(req, res) {
 
 app.get('/api/projects', function(req, res) {
   Project.find({}, function(err, projects) {
+    if (err) {
+      return res.status(409).send({message: 'There was an error retrieving projects ' + err});
+    }
+    res.send(projects);
+  });
+});
+
+app.get('/api/project/fields', function(req, res) {
+  Project.find({prefix: req.query.prefix})
+  .populate('fields')
+  .exec(function(err, projects) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving projects ' + err});
     }

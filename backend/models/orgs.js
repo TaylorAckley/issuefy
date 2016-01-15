@@ -8,9 +8,10 @@ var OrgSchema = new Schema({
     regkey:     {type: String, required: true, trim: true, unique: true},
     license:    {type: Number, default: 50},
     users:      {type: Number,  default: 0},
-    createdby:  {type: String},
+    created_by:  {type: Schema.ObjectId},
     created_at: {type: Date, default: Date.now},
-    updated_at: {type: Date, default: Date.now}
+    updated_at: {type: Date, default: Date.now},
+    updated_by: {type: Schema.ObjectId, required: false}
 });
 
 OrgSchema.pre('save', function(next){

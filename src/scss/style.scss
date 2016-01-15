@@ -1,6 +1,7 @@
 $primary: #3498db;
 $primaryText: #3F4146;
 $secondaryText: #7f8c8d;
+$button: #3F4146;
 $emerald: #2ecc71;
 $blue: #2980b9;
 $midnightBlue: #2c3e50;
@@ -155,6 +156,11 @@ a:focus {
   display: block;
 
 }
+
+.textAngularControls .btn .btn-default {
+  color: #000;
+}
+
 
 .intro {
     display: table;
@@ -321,17 +327,17 @@ a:focus {
 }
 
 .btn-default {
-    border: 1px solid $emerald;
-    color: $emerald;
+    border: 1px solid $button;
+    color: $button;
     background-color: transparent;
 }
 
 .btn-default:hover,
 .btn-default:focus {
-    border: 1px solid $emerald;
+    border: 1px solid $button;
     outline: 0;
     color: #000;
-    background-color: $emerald;
+    background-color: $button;
 }
 
 ul.banner-social-buttons {
@@ -364,17 +370,6 @@ footer p {
     margin: 0;
 }
 
-::-moz-selection {
-    text-shadow: none;
-    background: #fcfcfc;
-    background: rgba(255,255,255,.2);
-}
-
-::selection {
-    text-shadow: none;
-    background: #fcfcfc;
-    background: rgba(255,255,255,.2);
-}
 
 img::selection {
     background: 0 0;

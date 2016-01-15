@@ -8,7 +8,7 @@ var UserSchema = new Schema({
     email: {type: String, required: true, lowercase: true, trim: true, unique: true},
     password: { type: String, required: true},
     name: {type: String, required: true, trim: true} ,
-    org: {type: String, required: true, default: '56677e2191015d882f8ede28'},
+    org: {type: Schema.ObjectId, required: true, default: '56677e2191015d882f8ede28'},
     permissions: {
       isAdmin: {type: Boolean, default: false},
       createIssue: {type: Boolean, default: true},
@@ -29,7 +29,7 @@ var UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function(next){
-    now = new Date();
+    var now = new Date();
     this.updated_at = now;
     if(!this.created_at) {
         this.created_at = now;

@@ -4,13 +4,14 @@
       .module('issuefy')
       .controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['$scope', '$http', '$location', 'LocalStorage', 'QueryService', 'Issues', 'Projects'];
+    HomeCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects'];
 
 
-    function HomeCtrl($scope, $http, $location, LocalStorage, QueryService, Issues, Projects) {
+    function HomeCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects) {
 
       $scope.getIssues = Issues.getIssues()
           .then(function(response) {
+            console.log(response.data);
             $scope.issues = response.data;
           })
           .catch(function(response) {

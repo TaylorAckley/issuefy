@@ -15,7 +15,17 @@
     return {
           getIssues: function() {
             return $http.get('/api/issues');
+          },
+          getIssue: function(project, number) {
+            return $http.get('/api/issue', {
+              params: {
+                project: project,
+                number: number
+              }
+            });
           }
+
+
         };
 
 

@@ -120,6 +120,9 @@ a:focus {
 .btn-group .btn-group-block {
   display: block; }
 
+.textAngularControls .btn .btn-default {
+  color: #000; }
+
 .intro {
   display: table;
   width: 100%;
@@ -249,16 +252,16 @@ a:focus {
   transition: all .3s ease-in-out; }
 
 .btn-default {
-  border: 1px solid #2ecc71;
-  color: #2ecc71;
+  border: 1px solid #3F4146;
+  color: #3F4146;
   background-color: transparent; }
 
 .btn-default:hover,
 .btn-default:focus {
-  border: 1px solid #2ecc71;
+  border: 1px solid #3F4146;
   outline: 0;
   color: #000;
-  background-color: #2ecc71; }
+  background-color: #3F4146; }
 
 ul.banner-social-buttons {
   margin-top: 0; }
@@ -280,16 +283,6 @@ footer {
 
 footer p {
   margin: 0; }
-
-::-moz-selection {
-  text-shadow: none;
-  background: #fcfcfc;
-  background: rgba(255, 255, 255, 0.2); }
-
-::selection {
-  text-shadow: none;
-  background: #fcfcfc;
-  background: rgba(255, 255, 255, 0.2); }
 
 img::selection {
   background: 0 0; }

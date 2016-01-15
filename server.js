@@ -50,12 +50,12 @@ mongoose.connection.on('error', function(err) {
 
 //routes
 
-auth 			= require('./backend/routes.auth.js')(app);
-org 			= require('./backend/routes.orgs.js')(app);
-project 	= require('./backend/routes.projects.js')(app);
-issue 		= require('./backend/routes.issues.js')(app);
-tag 			= require('./backend/routes.tags.js')(app);
-field 		= require('./backend/routes.fields.js')(app);
+var auth 			= require('./backend/routes.auth.js')(app);
+var org 			= require('./backend/routes.orgs.js')(app);
+var project 	= require('./backend/routes.projects.js')(app);
+var issue 		= require('./backend/routes.issues.js')(app);
+var tag 			= require('./backend/routes.tags.js')(app);
+var field 		= require('./backend/routes.fields.js')(app);
 
   app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
