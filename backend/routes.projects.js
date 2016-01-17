@@ -45,6 +45,15 @@ app.get('/api/projects', function(req, res) {
   });
 });
 
+app.get('/api/project', function(req, res) {
+  Project.find({prefix: req.query.prefix}, function(err, project) {
+    if (err) {
+      return res.status(409).send({message: 'There was an error retrieving projects ' + err});
+    }
+    res.send(project);
+  });
+});
+
 app.get('/api/project/fields', function(req, res) {
   Project.find({prefix: req.query.prefix})
   .populate('fields')

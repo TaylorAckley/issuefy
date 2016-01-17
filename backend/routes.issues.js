@@ -1,7 +1,8 @@
 "use strict";
 
 var mongoose  = require('mongoose');
-var Issues     = require('./models/issues.js');
+var Issues    = require('./models/issues.js');
+var Projects  = require('./models/projects.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');
@@ -50,28 +51,31 @@ return jwt.sign(payload, TOKEN_SECRET);
 module.exports = function(app) {
 
 app.post('/api/issue/create', function(req, res) {
-  Issues.findOne({prefix: req.body.prefix}, function(err, existingIssue) {
-    if (existingIssue) {
-      return res.status(401).send({ message: 'There is already a issue with that name' });
-    }
+
     var issue = new Issues({
       title: req.body.title,
       description: req.body.description,
       fields: req.body.fields,
       project: req.body.project,
-      number: req.body.number,
       created_by: req.user || req.body.created_by,
-      type: req.body.type,
-
     });
+
+    Projects.findOne({_id: req.body.project}).select('numberSeq').exec(function(err, doc) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(doc.numberSeq);
+        issue.number = doc.numberSeq;
+      });
+
     issue.save(function(err, result) {
       if (err) {
         return res.status(409).send({message: 'There was an error creating the issue: ' + err});
       }
+      console.log(result);
       res.send({message: 'New issue created', result: result});
     });
   });
-});
 
 app.get('/api/issue', function(req, res) {
   console.log(req.query.project);

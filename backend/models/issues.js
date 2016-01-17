@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Project = require('./projects.js');
 
 var IssueSchema = new Schema({
     title: {type: String, required: true, trim: true,  index: true},
-    number: {type: Number, required: true, min: 1000},
+    number: {},
     description: {type: String, required: true},
     vote_up: {type: Number, default: 0},
     vote_down: {type: Number, default: 0},
@@ -37,23 +38,17 @@ IssueSchema.pre('save', function(next){
         this.created_at = now;
     }
     next();
-});
-
-IssueSchema.pre('save', function(next) {
-    var doc = this;
-    counter.findByAndUpdate({project: this.project}, {$inc: { seq: 1} }, function(error, counter)   {
-        if(error) {
-            return next(error);
-          }
-        doc.number = counter.seq;
-        next();
+})
+.pre('save', function(next) {
+  Project.findOne({_id: this.project}).select('numberSeq').exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(doc.numberSeq);
+      this.number = doc.numberSeq;
+      next();
     });
 });
 
-var CounterSchema = Schema({
-    project: {type: Schema.ObjectId, required: true},
-    seq: { type: Number, default: 1000 }
-});
 
 module.exports = mongoose.model('issues', IssueSchema);
-var counter = mongoose.model('counter', CounterSchema);
