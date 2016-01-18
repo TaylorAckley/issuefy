@@ -11,14 +11,24 @@
       <form>
         <select class="form-control" ng-model="data.project" ng-change="getProjectFields()" ng-options="project.prefix for project in projects track by project.prefix">
           </select>
-          <h2>{{fieldsObj.fields[0].name}}</h2>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
-      {{fieldObj._id}}
       <div ng-repeat="field in fieldsObj.fields">
-        <h2>{{field.name}}</h2>
+        <div class="form-group">
+          <label class="sr-only">{{field.name}}</label>
+          <div ng-if="field.type ==  'enum'">
+            Display enum
+          </div>
+          <div ng-if="field.type ==  'bool'">
+            Display bool
+          </div>
+          <div ng-if="field.type ==  'freetext'">
+            Display freetext
+          </div>
+        </div>
+        <h2></h2>
       </div>
     </div>
   </div>
