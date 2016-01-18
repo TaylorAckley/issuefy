@@ -50,7 +50,10 @@ app.get('/api/projects', function(req, res) {
 });
 
 app.get('/api/project', function(req, res) {
-  Project.find({prefix: req.query.prefix}, function(err, project) {
+  Project.find({prefix: req.query.prefix})
+  .populate('fields')
+  .populate('created_by')
+  .exec(function(err, project) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving projects ' + err});
     }
@@ -59,8 +62,9 @@ app.get('/api/project', function(req, res) {
 });
 
 app.get('/api/project/fields', function(req, res) {
-  Project.find({prefix: req.query.prefix})
+  Project.findOne({prefix: req.query.prefix})
   .populate('fields')
+  .select('fields')
   .exec(function(err, projects) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving projects ' + err});

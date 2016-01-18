@@ -4,7 +4,7 @@ var Project = require('./projects.js');
 
 var IssueSchema = new Schema({
     title: {type: String, required: true, trim: true,  index: true},
-    number: {},
+    number: {type: Number},
     description: {type: String, required: true},
     vote_up: {type: Number, default: 0},
     vote_down: {type: Number, default: 0},

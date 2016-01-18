@@ -24,6 +24,9 @@
 
       $scope.attachments = [];
 
+      $scope.data = {
+      };
+
       $scope.getProjects = Projects.getProjects()
           .then(function(response) {
             console.log(response.data);
@@ -34,10 +37,11 @@
           });
 
           $scope.getProjectFields =  function() {
-          Projects.getProjectFields($scope.data.project)
+            console.log($scope.data.project);
+          Projects.getProjectFields($scope.data.project.prefix)
               .then(function(response) {
                 console.log(response.data);
-                $scope.fields = response.data;
+                $scope.fieldsObj = response.data;
               })
               .catch(function(response) {
                 toastr.error(response.data.message, response.status);

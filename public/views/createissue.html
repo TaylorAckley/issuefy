@@ -9,15 +9,16 @@
       <div class="row">
         <div class="col-sm-12">
       <form>
-        <select class="form-control" ng-model="data.project" ng-change="getProjectFields()">
-          <option value="{{project.prefix}}" ng-repeat="project in projects">{{project.prefix}}</option>
+        <select class="form-control" ng-model="data.project" ng-change="getProjectFields()" ng-options="project.prefix for project in projects track by project.prefix">
           </select>
+          <h2>{{fieldsObj.fields[0].name}}</h2>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <div ng-repeat="field in fields.fields">
-        {{field.name}}
+      {{fieldObj._id}}
+      <div ng-repeat="field in fieldsObj.fields">
+        <h2>{{field.name}}</h2>
       </div>
     </div>
   </div>
