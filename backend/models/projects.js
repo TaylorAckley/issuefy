@@ -30,6 +30,10 @@ ProjectSchema.statics.getNextNumber = function(project, callback) {
     callback(nextNum);
   });
 
+  ProjectSchema.statics.incrementSeq = function(project) {
+    this.update({_id: project}, {$inc:  {numberSeq: 1}});
+    };
+
 };
 
 module.exports = mongoose.model('projects', ProjectSchema);

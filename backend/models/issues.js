@@ -44,11 +44,19 @@ IssueSchema.pre('save', function(next){
     if (err) {
       console.log(err);
     }
-    console.log(doc.numberSeq);
       this.number = doc.numberSeq;
       next();
     });
+})
+.post('save', function(doc) {
+  console.log('post hook firing off');
+  console.log(doc.project);
+  Project.update({_id: doc.project}, {$inc:  {numberSeq: 1}}, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+  });
 });
-
 
 module.exports = mongoose.model('issues', IssueSchema);
