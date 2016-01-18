@@ -24,7 +24,9 @@
       'ui.router',
       'satellizer',
       'ui.bootstrap',
-      'textAngular'
+      'textAngular',
+      'ngFileUpload',
+      'cloudinary'
     ])
     .config(config);
 

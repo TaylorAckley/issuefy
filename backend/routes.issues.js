@@ -60,14 +60,6 @@ app.post('/api/issue/create', function(req, res) {
       created_by: req.user || req.body.created_by,
     });
 
-    Projects.findOne({_id: req.body.project}).select('numberSeq').exec(function(err, doc) {
-      if (err) {
-        console.log(err);
-      }
-      console.log(doc.numberSeq);
-        issue.number = doc.numberSeq;
-      });
-
     issue.save(function(err, result) {
       if (err) {
         return res.status(409).send({message: 'There was an error creating the issue: ' + err});
@@ -78,7 +70,6 @@ app.post('/api/issue/create', function(req, res) {
   });
 
 app.get('/api/issue', function(req, res) {
-  console.log(req.query.project);
   Issues.findOne({project: req.query.project, number: req.query.number})
       .populate('project')
       .populate('created_by')

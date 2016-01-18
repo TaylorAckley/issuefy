@@ -6,7 +6,7 @@
       .controller('NewIssueCtrl', NewIssueCtrl);
 
     IssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'projectContext'];
-    NewIssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects'];
+    NewIssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'Upload', 'cloudinary'];
 
 
     function IssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects, projectContext) {
@@ -20,12 +20,9 @@
           });
     }
 
-    function NewIssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects) {
-      var self = this;
+    function NewIssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects, Upload, cloudinary) {
 
-      $scope.data = {
-        project: null
-      };
+      $scope.attachments = [];
 
       $scope.getProjects = Projects.getProjects()
           .then(function(response) {
@@ -46,6 +43,59 @@
                 toastr.error(response.data.message, response.status);
               });
             };
+
+
+            // cloudinary
+            var d = new Date();
+  $scope.imgTitle = "Image (" + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() + ")";
+  //$scope.$watch('files', function() {
+  $scope.uploadFiles = function(files){
+    $scope.files = files;
+    if (!$scope.files) return;
+    angular.forEach(files, function(file){
+      if (file && !file .$error) {
+        file.upload = Upload.upload({
+          url: "https://api.cloudinary.com/v1_1/highwood-labs/upload",
+          skipAuthorization: true,
+          data: {
+            upload_preset: 'issuefy',
+            tags: 'form',
+            context: 'photo=' + $scope.imgTitle,
+            file: file
+          }
+        }).progress(function (e) {
+          file.progress = Math.round((e.loaded * 100.0) / e.total);
+          file.status = "Uploading... " + file.progress + "%";
+        }).success(function (data, status, headers, config) {
+          $rootScope.photos = $rootScope.photos || [];
+          data.context = {custom: {photo: $scope.title}};
+          file.result = data;
+          $scope.attachments.push(data);
+        }).error(function (data, status, headers, config) {
+          file.result = data;
+        });
+      }
+    });
+  };
+  //});
+
+  /* Modify the look and fill of the dropzone when files are being dragged over it */
+  $scope.dragOverClass = function($event) {
+    var items = $event.dataTransfer.items;
+    var hasFile = false;
+    if (items !== null) {
+      for (var i = 0 ; i < items.length; i++) {
+        if (items[i].kind === 'file') {
+          hasFile = true;
+          break;
+        }
+      }
+    } else {
+      hasFile = true;
+    }
+    return hasFile ? "dragover" : "dragover-err";
+  };
+
       ////////////  function definitions
 
 
