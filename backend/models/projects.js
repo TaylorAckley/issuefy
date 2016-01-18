@@ -6,7 +6,7 @@ var ProjectSchema = new Schema({
     prefix: {type: String, required: true, unique: true, index: true},
     numberSeq: {type: Number, required: true, default: 1000, min: 1000},
     org: {type: Schema.ObjectId, required: true, default: '56677e2191015d882f8ede28'},
-    fields: {type: [Schema.ObjectId], required: true,  ref: 'fields', default: ['568a06c4cb96e3e40313ad7a', '568ad92f523c2fe01cc0359b']},
+    fields: [{type: [Schema.ObjectId], required: true,  ref: 'fields', default: ['568a06c4cb96e3e40313ad7a', '568ad92f523c2fe01cc0359b']}],
     isArchived: {type: Boolean, default: false},
     created_by: {type: Schema.ObjectId, required: true, ref: 'users'},
     created_at: {type: Date, default: Date.now},

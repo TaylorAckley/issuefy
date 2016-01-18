@@ -73,6 +73,7 @@ app.get('/api/issue', function(req, res) {
   Issues.findOne({project: req.query.project, number: req.query.number})
       .populate('project')
       .populate('created_by')
+      .populate('fields')
       .exec(function(err, issue) {
         console.log('Issue focus');
      console.log(issue);
@@ -86,6 +87,8 @@ app.get('/api/issue', function(req, res) {
 app.get('/api/issues', function(req, res) {
   Issues.find()
   .populate('project')
+  .populate('created_by')
+  .populate('fields')
   .exec(function(err, issues) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving issues' + err});

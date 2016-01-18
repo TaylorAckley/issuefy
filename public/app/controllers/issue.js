@@ -67,9 +67,8 @@
           file.progress = Math.round((e.loaded * 100.0) / e.total);
           file.status = "Uploading... " + file.progress + "%";
         }).success(function (data, status, headers, config) {
-          $rootScope.photos = $rootScope.photos || [];
           data.context = {custom: {photo: $scope.title}};
-          file.result = data;
+          file.result = 'Success';
           $scope.attachments.push(data);
         }).error(function (data, status, headers, config) {
           file.result = data;

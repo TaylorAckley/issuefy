@@ -15,7 +15,7 @@ var IssueSchema = new Schema({
       date: {type: Date}
     })],
     attachments: [new Schema({
-      _id: {type: Schema.ObjectId, ref: 'fields'},
+      _id: {type: Schema.ObjectId},
       value : {type: String}
     })],
     fields: [new Schema({

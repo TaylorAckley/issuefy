@@ -1,5 +1,6 @@
 var mongoose  = require('mongoose');
 var Project   = require('./models/projects.js');
+var Field     = require('./models/fields.js');
 var auth      = require('./routes.auth.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
@@ -37,7 +38,10 @@ app.post('/api/project/create', function(req, res) {
 });
 
 app.get('/api/projects', function(req, res) {
-  Project.find({}, function(err, projects) {
+  Project.find({})
+  .populate('fields')
+  .populate('created_by')
+  .exec(function(err, projects) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving projects ' + err});
     }
