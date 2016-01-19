@@ -9,39 +9,52 @@
       <div class="row">
         <div class="col-sm-12">
       <form>
+        <div class="form-group">
+          <label>Project</label>
         <select class="form-control" ng-model="data.project" ng-change="getProjectFields()" ng-options="project.prefix for project in projects track by project.prefix">
           </select>
+        </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div ng-repeat="field in fieldsObj.fields">
         <div class="form-group">
-          <label class="sr-only">{{field.name}}</label>
+          <label>{{field.name}}</label>
           <div ng-if="field.type ==  'enum'">
-            Display enum
+            <select class="form-control" ng-model="data.fields[field._id]" ng-init="initProjSelection">
+              <option ng-repeat="value in field.values" value="{{value}}">{{value}}</option>
+            </select>
           </div>
           <div ng-if="field.type ==  'bool'">
-            Display bool
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="data.fields[field._id]"> {{field.name}}
+              </label>
+            </div>
           </div>
           <div ng-if="field.type ==  'freetext'">
-            Display freetext
+            <input type="text">
           </div>
         </div>
-        <h2></h2>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <p>{{data}}</p>
+</div>
+</div>
   </div>
 
     <div class="col-md-8">
         <div class="form-group">
             <label class="sr-only">Title</label>
-            <input type="text" name="title" class="form-control" placeholder="Title">
+            <input type="text" name="title" class="form-control" placeholder="Title" ng-model="data.title">
         </div>
         <div class="form-group">
             <label class="sr-only">Description</label>
-            <div class="textAngularControls" text-angular ng-model="description"></div>
+            <div class="textAngularControls" text-angular ng-model="data.description"></div>
         </div>
         <div class="form-group">
           <label class="sr-only">Attachments</label>
@@ -95,7 +108,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-md btn-default">Create Todo</button>
+        <button type="submit" class="btn btn-md btn-default" ng-click="createIssue()">Create Todo</button>
       </form>
     </div>
   </div>

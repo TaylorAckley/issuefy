@@ -25,6 +25,8 @@
       $scope.attachments = [];
 
       $scope.data = {
+        project: null,
+        attachments: []
       };
 
       $scope.getProjects = Projects.getProjects()
@@ -72,8 +74,8 @@
           file.status = "Uploading... " + file.progress + "%";
         }).success(function (data, status, headers, config) {
           data.context = {custom: {photo: $scope.title}};
-          file.result = 'Success';
-          $scope.attachments.push(data);
+          file.result = data;
+          $scope.data.attachments.push(data);
         }).error(function (data, status, headers, config) {
           file.result = data;
         });
