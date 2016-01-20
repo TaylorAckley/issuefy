@@ -14,10 +14,7 @@ var IssueSchema = new Schema({
       likes: {type: Number},
       date: {type: Date}
     })],
-    attachments: [new Schema({
-      _id: {type: Schema.ObjectId},
-      value : {type: String}
-    })],
+    attachments: [],
     fields: [new Schema({
       _id: {type: Schema.ObjectId, ref: 'fields'},
       value : {type: String}

@@ -50,12 +50,13 @@ return jwt.sign(payload, TOKEN_SECRET);
 
 module.exports = function(app) {
 
-app.post('/api/issue/create', function(req, res) {
+app.post('/api/issue/create', ensureAuthenticated, function(req, res) {
 
     var issue = new Issues({
       title: req.body.title,
       description: req.body.description,
       fields: req.body.fields,
+      attachments: req.body.attachments,
       project: req.body.project,
       created_by: req.user || req.body.created_by,
     });
@@ -88,7 +89,7 @@ app.get('/api/issues', function(req, res) {
   Issues.find()
   .populate('project')
   .populate('created_by')
-  .populate('fields')
+  //.populate('fields')
   .exec(function(err, issues) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving issues' + err});

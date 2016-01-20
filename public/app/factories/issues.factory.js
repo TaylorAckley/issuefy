@@ -13,6 +13,10 @@
   function Issues($http, LocalStorage) {
 
     return {
+
+          createIssue: function(newIssue) {
+            return $http.post('/api/issue/create', newIssue);
+          },
           getIssues: function() {
             return $http.get('/api/issues');
           },

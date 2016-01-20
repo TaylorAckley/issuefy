@@ -22,7 +22,7 @@
         <div class="form-group">
           <label>{{field.name}}</label>
           <div ng-if="field.type ==  'enum'">
-            <select class="form-control" ng-model="data.fields[field._id]" ng-init="initProjSelection">
+            <select class="form-control" ng-model="fieldsData[field._id]">
               <option ng-repeat="value in field.values" value="{{value}}">{{value}}</option>
             </select>
           </div>
@@ -42,11 +42,12 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-        <p>{{data}}</p>
+        <p>{{data.fields}}</p>
+        <p>{{data.attachments}}</p>
+        <p>{{fieldsData}}</p>
 </div>
 </div>
   </div>
-
     <div class="col-md-8">
         <div class="form-group">
             <label class="sr-only">Title</label>
@@ -104,10 +105,8 @@
                     </table>
                   </div>
               </div>
-
           </div>
         </div>
-
         <button type="submit" class="btn btn-md btn-default" ng-click="createIssue()">Create Todo</button>
       </form>
     </div>

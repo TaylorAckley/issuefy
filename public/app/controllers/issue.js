@@ -22,12 +22,43 @@
 
     function NewIssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects, Upload, cloudinary) {
 
+      $scope.createIssue = function() {
+        console.log($scope.data);
+        var fieldsCleaned =  _.map($scope.fieldsData, function(value, _id) {
+            return { _id: _id, value: value };
+            });
+
+            console.log(fieldsCleaned);
+
+
+        var issueObj = {
+          title: $scope.data.title,
+          description: $scope.data.description,
+          project: $scope.data.project._id,
+          attachments: $scope.data.attachments,
+          fields: fieldsCleaned
+        };
+
+        Issues.createIssue(issueObj)
+        .then(function(response) {
+          console.log(response);
+          toastr.success("New issue created");
+          $scope.data = {};
+        })
+        .catch(function(response) {
+          console.log(response.data.message);
+        }
+        );
+      };
+
       $scope.attachments = [];
 
       $scope.data = {
         project: null,
         attachments: []
       };
+
+      $scope.fieldsData = {};
 
       $scope.getProjects = Projects.getProjects()
           .then(function(response) {
