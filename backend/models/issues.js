@@ -20,7 +20,7 @@ var IssueSchema = new Schema({
       value : {type: String}
     })],
     project: {type: Schema.ObjectId, required: true, index: true, ref: 'projects'},
-    tags: {type: [Schema.ObjectId], required: false, default: []},
+    tags: {type: [Schema.ObjectId], required: false, default: ['56a2a0b1ea805d403f6d014b']},
     isResolved: {type: Boolean, default: false},
     created_by: {type: Schema.ObjectId, required: true, ref: 'users'},
     updated_by: {type: Schema.ObjectId, required: false, ref: 'users'},
@@ -37,11 +37,13 @@ IssueSchema.pre('save', function(next){
     next();
 })
 .pre('save', function(next) {
+  var self = this;
   Project.findOne({_id: this.project}).select('numberSeq').exec(function(err, doc) {
     if (err) {
       console.log(err);
     }
-      this.number = doc.numberSeq;
+    console.log('pre-save hook firing');
+      self.number = doc.numberSeq;
       next();
     });
 })

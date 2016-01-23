@@ -26,7 +26,8 @@
       'ui.bootstrap',
       'textAngular',
       'ngFileUpload',
-      'cloudinary'
+      'cloudinary',
+      'ngTagsInput'
     ])
     .config(config);
 

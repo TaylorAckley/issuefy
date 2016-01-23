@@ -16,7 +16,7 @@ var TOKEN_SECRET            = process.env.TOKEN_SECRET;
 
 module.exports = function(app) {
 
-app.post('/API/tag/create', function(req, res) {
+app.post('/api/tag/create', function(req, res) {
   Tag.findOne({name: req.body.name}, function(err, existingTag) {
     if (existingTag) {
       return res.status(401).send({ message: 'There is already a tag with that name' });
@@ -39,6 +39,15 @@ app.post('/API/tag/create', function(req, res) {
 
 app.get('/api/tags', function(req, res) {
   Tag.find({}, function(err, tags) {
+    if (err) {
+      return res.status(409).send({message: 'There was an error retrieving tags ' + err});
+    }
+    res.send(tags);
+  });
+});
+
+app.get('/api/tags/autocomplete', function(req, res) {
+  Tag.find({}).select('name').exec(function(err, tags) {
     if (err) {
       return res.status(409).send({message: 'There was an error retrieving tags ' + err});
     }

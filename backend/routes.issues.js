@@ -50,7 +50,7 @@ return jwt.sign(payload, TOKEN_SECRET);
 
 module.exports = function(app) {
 
-app.post('/api/issue/create', ensureAuthenticated, function(req, res) {
+app.post('/api/issue/create', function(req, res) {
 
     var issue = new Issues({
       title: req.body.title,
@@ -64,6 +64,9 @@ app.post('/api/issue/create', ensureAuthenticated, function(req, res) {
     issue.save(function(err, result) {
       if (err) {
         return res.status(409).send({message: 'There was an error creating the issue: ' + err});
+      }
+      if (!result.number) {
+        console.log('number = :(');
       }
       console.log(result);
       res.send({message: 'New issue created', result: result});

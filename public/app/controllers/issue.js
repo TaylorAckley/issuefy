@@ -5,11 +5,11 @@
       .controller('IssueCtrl', IssueCtrl)
       .controller('NewIssueCtrl', NewIssueCtrl);
 
-    IssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'projectContext'];
-    NewIssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'Upload', 'cloudinary'];
+    IssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', '$sanitize', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'projectContext', 'toastr'];
+    NewIssueCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', '$state', 'LocalStorage', 'QueryService', 'Issues', 'Projects', 'Upload', 'cloudinary', 'toastr', 'Tags'];
 
 
-    function IssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects, projectContext) {
+    function IssueCtrl($scope, $http, $location, $stateParams, $sanitize, LocalStorage, QueryService, Issues, Projects, projectContext, toastr, Tags) {
       $scope.getIssue = Issues.getIssue(projectContext._id, $stateParams.number)
           .then(function(response) {
             console.log(response.data);
@@ -18,18 +18,16 @@
           .catch(function(response) {
             toastr.error(response.data.message, response.status);
           });
+
+          $scope.safeDescription = $sanitize($scope.issue.description);
     }
 
-    function NewIssueCtrl($scope, $http, $location, $stateParams, LocalStorage, QueryService, Issues, Projects, Upload, cloudinary) {
+    function NewIssueCtrl($scope, $http, $location, $stateParams, $state, LocalStorage, QueryService, Issues, Projects, Upload, cloudinary, toastr, Tags) {
 
-      $scope.createIssue = function() {
-        console.log($scope.data);
+      $scope.createIssue = function(mode) {
         var fieldsCleaned =  _.map($scope.fieldsData, function(value, _id) {
             return { _id: _id, value: value };
             });
-
-            console.log(fieldsCleaned);
-
 
         var issueObj = {
           title: $scope.data.title,
@@ -43,7 +41,11 @@
         .then(function(response) {
           console.log(response);
           toastr.success("New issue created");
+          if (mode) {
           $scope.data = {};
+        } else {
+          $state.go('/issue/' + $scope.data.project.prefix + '-' + response.data.result.number);
+        }
         })
         .catch(function(response) {
           console.log(response.data.message);
@@ -55,14 +57,14 @@
 
       $scope.data = {
         project: null,
-        attachments: []
+        attachments: [],
+        tags: null
       };
 
       $scope.fieldsData = {};
 
       $scope.getProjects = Projects.getProjects()
           .then(function(response) {
-            console.log(response.data);
             $scope.projects = response.data;
           })
           .catch(function(response) {
@@ -70,16 +72,19 @@
           });
 
           $scope.getProjectFields =  function() {
-            console.log($scope.data.project);
           Projects.getProjectFields($scope.data.project.prefix)
               .then(function(response) {
-                console.log(response.data);
                 $scope.fieldsObj = response.data;
               })
               .catch(function(response) {
                 toastr.error(response.data.message, response.status);
               });
             };
+
+            $scope.getTags =  function() {
+                return $http.get('/api/tags/autocomplete');
+
+              };
 
 
             // cloudinary
@@ -88,7 +93,7 @@
   //$scope.$watch('files', function() {
   $scope.uploadFiles = function(files){
     $scope.files = files;
-    if (!$scope.files) return;
+    if (!$scope.files) { return;}
     angular.forEach(files, function(file){
       if (file && !file .$error) {
         file.upload = Upload.upload({

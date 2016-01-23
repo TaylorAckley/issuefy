@@ -10,7 +10,7 @@
   </div>
   <div class="row">
     <div class="col-md-8 col-md-offset-1">
-      <p>{{issue.description}}</p>
+      <p ng-bind-html-unsafe="safeDescription"></p>
     </div>
   </div>
 </div>
