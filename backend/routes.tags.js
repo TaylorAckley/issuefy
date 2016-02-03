@@ -1,5 +1,5 @@
 var mongoose  = require('mongoose');
-var Tag       = require('./models/tags.js');
+var Tag       = require('./models/model.tags.js');
 var auth      = require('./routes.auth.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');

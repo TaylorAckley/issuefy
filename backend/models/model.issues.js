@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Project = require('./projects.js');
+var Project = require('./model.projects.js');
 
 var IssueSchema = new Schema({
     title: {type: String, required: true, trim: true,  index: true},
@@ -8,6 +8,7 @@ var IssueSchema = new Schema({
     description: {type: String, required: true},
     vote_up: {type: Number, default: 0},
     vote_down: {type: Number, default: 0},
+    Assignee: {type: Schema.ObjectId, ref: 'users'},
     comments: [new Schema({
       _id: {type: Schema.ObjectId, ref: 'users'},
       description : {type: String},
@@ -20,7 +21,7 @@ var IssueSchema = new Schema({
       value : {type: String}
     })],
     project: {type: Schema.ObjectId, required: true, index: true, ref: 'projects'},
-    tags: {type: [Schema.ObjectId], required: false, default: ['56a2a0b1ea805d403f6d014b']},
+    tags: {type: [Schema.ObjectId], required: false},
     isResolved: {type: Boolean, default: false},
     created_by: {type: Schema.ObjectId, required: true, ref: 'users'},
     updated_by: {type: Schema.ObjectId, required: false, ref: 'users'},
@@ -42,7 +43,6 @@ IssueSchema.pre('save', function(next){
     if (err) {
       console.log(err);
     }
-    console.log('pre-save hook firing');
       self.number = doc.numberSeq;
       next();
     });

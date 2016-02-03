@@ -33,6 +33,13 @@
               </label>
             </div>
           </div>
+          <div ng-if="field.type ==  'date'">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="data.fields[field._id]"> {{field.name}}
+              </label>
+            </div>
+          </div>
           <div ng-if="field.type ==  'freetext'">
             <input type="text">
           </div>

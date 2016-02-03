@@ -1,8 +1,8 @@
 "use strict";
 
 var mongoose  = require('mongoose');
-var Issues    = require('./models/issues.js');
-var Projects  = require('./models/projects.js');
+var Issues    = require('./models/model.issues.js');
+var Projects  = require('./models/model.projects.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');
@@ -50,7 +50,7 @@ return jwt.sign(payload, TOKEN_SECRET);
 
 module.exports = function(app) {
 
-app.post('/api/issue/create', function(req, res) {
+app.post('/api/issue/create', ensureAuthenticated, function(req, res) {
 
     var issue = new Issues({
       title: req.body.title,
@@ -58,6 +58,7 @@ app.post('/api/issue/create', function(req, res) {
       fields: req.body.fields,
       attachments: req.body.attachments,
       project: req.body.project,
+      tags: req.body.tags,
       created_by: req.user || req.body.created_by,
     });
 
@@ -65,10 +66,6 @@ app.post('/api/issue/create', function(req, res) {
       if (err) {
         return res.status(409).send({message: 'There was an error creating the issue: ' + err});
       }
-      if (!result.number) {
-        console.log('number = :(');
-      }
-      console.log(result);
       res.send({message: 'New issue created', result: result});
     });
   });
@@ -77,10 +74,9 @@ app.get('/api/issue', function(req, res) {
   Issues.findOne({project: req.query.project, number: req.query.number})
       .populate('project')
       .populate('created_by')
-      .populate('fields')
+      .populate('fields._id')
       .exec(function(err, issue) {
         console.log('Issue focus');
-     console.log(issue);
      if (err) {
        return res.status(409).send({message: 'There was an error retrieving the issue' + err});
      }

@@ -18,8 +18,11 @@
   <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+
   <link href="./styles/angular-toastr.css" rel="stylesheet">
 	<link href="./styles/auth.css" rel="stylesheet">
 	<link href="./styles/social.css" rel="stylesheet">
@@ -35,13 +38,35 @@
   </div>
   <ul class="nav navbar-nav" ng-if="isAuthenticated()">
     <li><a href="/">Home</a></li>
-		<li role="menuitem"><a href="/#/projects">Projects</a></li>
-		<li role="menuitem"><a href="/#/fields">Fields</a></li>
-		<li role="menuitem"><a href="/#/tags">Tags</a></li>
   </ul>
   <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-
 		<li>
+			&nbsp;
+			<div class="btn-group" uib-dropdown is-open="status.isopen">
+				<a id="single-button" type="button" uib-dropdown-toggle ng-disabled="disabled">
+					<i class="fa fa-plus"></i
+				</a>
+				<ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="/#/issue/create">Create Issue</a></li>
+					<li role="menuitem"><a href="/#/issue/create">Create Project</a></li>
+				</ul>
+			</div>
+		</li>
+		<li>
+			&nbsp;
+			<div class="btn-group" uib-dropdown is-open="status.isopen">
+				<a id="single-button" type="button" uib-dropdown-toggle ng-disabled="disabled">
+					<i class="fa fa-gear"></i
+				</a>
+				<ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="/#/projects">Projects</a></li>
+					<li role="menuitem"><a href="/#/fields">Fields</a></li>
+					<li role="menuitem"><a href="/#/tags">Tags</a></li>
+				</ul>
+			</div>
+		</li>
+		<li>
+			&nbsp;
 			<div class="btn-group" uib-dropdown is-open="status.isopen">
 	      <a id="single-button" type="button" uib-dropdown-toggle ng-disabled="disabled">
 	        <i class="fa fa-user"></i>&nbsp;{{userNav.name}}
@@ -87,13 +112,13 @@
 <script src="/app/directives/passwordMatch.js"></script>
 <script src="/app/directives/issues.directives.js"></script>
 <script src="/app/directives/projects.directives.js"></script>
-<script src="/app/controllers/home.js"></script>
-<script src="/app/controllers/login.js"></script>
-<script src="/app/controllers/signup.js"></script>
-<script src="/app/controllers/logout.js"></script>
-<script src="/app/controllers/profile.js"></script>
-<script src="/app/controllers/navbar.js"></script>
-<script src="/app/controllers/issue.js"></script>
+<script src="/app/controllers/home.controller.js"></script>
+<script src="/app/controllers/login.controller.js"></script>
+<script src="/app/controllers/signup.controller.js"></script>
+<script src="/app/controllers/logout.controller.js"></script>
+<script src="/app/controllers/profile.controller.js"></script>
+<script src="/app/controllers/navbar.controller.js"></script>
+<script src="/app/controllers/issue.controller.js"></script>
 <script src="/app/factories/account.factory.js"></script>
 <script src="/app/factories/issues.factory.js"></script>
 <script src="/app/factories/projects.factory.js"></script>

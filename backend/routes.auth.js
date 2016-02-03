@@ -1,5 +1,5 @@
 var mongoose  = require('mongoose');
-var User      = require('./models/users.js');
+var User      = require('./models/model.users.js');
 var moment    = require('moment');
 var jwt       = require('jsonwebtoken');
 var randtoken = require('rand-token');

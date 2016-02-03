@@ -27,7 +27,8 @@
       'textAngular',
       'ngFileUpload',
       'cloudinary',
-      'ngTagsInput'
+      'ngTagsInput',
+      'ui.select'
     ])
     .config(config);
 
@@ -94,6 +95,14 @@
               return data.data[0];
             });
           }
+        }
+      })
+      .state('projects', {
+        url: 'projects',
+        templateUrl: 'views/projects.html',
+        controller: 'ProjectCtrl',
+        resolve: {
+          loginRequired: loginRequired
         }
       });
 

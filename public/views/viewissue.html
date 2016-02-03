@@ -1,16 +1,71 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-8 col-md-offset-1">
-      <p>CREATED BY: {{issue.created_by.name}} ON {{issue.created_at | date}} <span ng-if="issue.updated_by">LAST UPDATED {{issue.updated_by | date}} BY {{issue.updated_by}}</span></p>
-    </div>
-  <div class="row">
-    <div class="col-md-8 col-md-offset-1">
-      <h4>{{issue.project.prefix}}-{{issue.number}} {{issue.title}}</h4>
+    <div class="col-md-8">
+            <h5>{{issue.project.prefix}}-{{issue.number}}: {{issue.title}}</h5>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-8 col-md-offset-1">
-      <p ng-bind-html-unsafe="safeDescription"></p>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-sm-12">
+      <form>
+        <div class="form-group">
+          <label>Project</label>
+          <ui-select ng-model="data.project" theme="bootstrap" title="Project">
+            <ui-select-match>{{$select.selected.prefix || data.project}}</ui-select-match>
+            <ui-select-choices repeat="project in projects | filter: $select.search">
+              <div ng-bind-html="project.prefix | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+
+
+
+
+        </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div ng-repeat="field in fieldsObj">
+        <div class="form-group">
+          <label>{{field._id.name}}</label>
+          <div ng-if="field._id.type ==  'enum'">
+            <ui-select ng-model="fieldsData[field._id._id]" theme="bootstrap" title="Project">
+              <ui-select-match>{{$select.selected._id.value || fieldsData[field._id._id]}}</ui-select-match>
+              <ui-select-choices repeat="value in field._id.values | filter: $select.search">
+                <div ng-bind-html="value | highlight: $select.search"></div>
+              </ui-select-choices>
+          </ui-select>
+          </div>
+          <div ng-if="field.type ==  'bool'">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="data.fields[field._id]"> {{field.name}}
+              </label>
+            </div>
+          </div>
+          <div ng-if="field.type ==  'date'">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="data.fields[field._id]"> {{field.name}}
+              </label>
+            </div>
+          </div>
+          <div ng-if="field.type ==  'freetext'">
+            <input type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+        <p>{{data.tags}}</p>
+        <p>{{fieldsData}}</p>
+</div>
+</div>
+  </div>
+    <div class="col-md-8">
+      <div ng-bind-html="safeDescription"></div>
   </div>
 </div>
